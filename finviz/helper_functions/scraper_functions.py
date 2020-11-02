@@ -70,7 +70,12 @@ def get_page_urls(page_content, rows, url):
 def download_chart_image(page_content: requests.Response, **kwargs):
     """ Downloads a .png image of a chart into the "charts" folder. """
 
-    file_name = kwargs["URL"].split("t=")[1] + ".png"
+    try:
+        file_name = kwargs["URL"].split("t=")[1] + ".png"
+    except:
+        file_name = kwargs["URL"].split("symb=")[1] + ".png"
+    
+    
 
     if not os.path.exists("charts"):
         os.mkdir("charts")
