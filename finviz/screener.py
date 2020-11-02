@@ -382,7 +382,7 @@ class Screener(object):
             ],
             self._delay,
         )
-        
+        print(f"https://api.wsj.net/api/kaavio/charts/big.chart?{encoded_payload}&symb={row.get('Ticker')}")
         
                               
 
