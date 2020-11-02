@@ -338,7 +338,7 @@ class Screener(object):
 
         return export_to_csv(self.headers, self.data, f"{filename}.csv")
       
-    def get_bigcharts(self, freq='1', size='4', type='12', sma='3', maval = '21,50,200', time ='10', style='340',):
+    def get_bigcharts(self, freq='1', size='4', type='12', ma='3', maval = '21,50,200', time ='10', style='340',):
         """
         Downloads the charts of all tickers shown by the table from BigCharts.com.
         :param freq: table period eg. : '2' - weekly , '1'- daily  or '8' for hourly period
