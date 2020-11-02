@@ -375,7 +375,7 @@ class Screener(object):
         sequential_data_scrape(
             scrape.download_chart_image,
             [
-                f"https://api.wsj.net/api/kaavio/charts/big.chart?{ecnoded_payload}&symb={row.get('Ticker')}"
+                f"https://api.wsj.net/api/kaavio/charts/big.chart?{ encoded_payload}&symb={row.get('Ticker')}"
                 for row in self.data
             ],
             self._delay,
