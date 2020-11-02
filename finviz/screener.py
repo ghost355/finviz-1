@@ -337,6 +337,49 @@ class Screener(object):
             )
 
         return export_to_csv(self.headers, self.data, f"{filename}.csv")
+      
+    def get_bigcharts(self, freq='1', size='4', type='12', sma='3', maval = '21,50,200', time ='10', style='340',):
+        """
+        Downloads the charts of all tickers shown by the table from BigCharts.com.
+        :param freq: table period eg. : '2' - weekly , '1'- daily  or '8' for hourly period
+        :type freq: str
+        :param size: table size eg.: '1' for the smallest or '4' for the biggest - choose '1'-'2'-'3'-'4'
+        :type size: str
+        :param type: chart type: '4' for candles or '1' for HLC or '12' for Logarithmic bar or '2' for OHLC or '340' for Close Line
+        :type type: str
+        :param ma: simple moving average: '1' , '2' or '3' - number of MA line
+        :type ma: str
+        :param maval: moving average periods: for example '21,50,200' - for ma = 3
+        :type maval: str
+        :param time: time period showed on the chart:'20' -all,'13' to '8' -10,5,4,3,2,1 Y, '19' -YTD, '7'-'4' -6,3,2,1 M, '18'-10D 
+        :type time: str
+        :param style:chart style:'320' - yellow and black, '340' - white and blue
+        :type style: str
+        
+        
+        """
+   
+        payload = {
+            'freq': freq,
+            'size': size,
+            'type': type,
+            'ma': ma,
+            'maval': maval,
+            'time': time,
+            'style': style,
+            'lf2': '67108864',
+            'lf': '268435456'
+        } # lf = Volume+ with color bar & SMA50 (change to '1' for simple Volume, lf2 = rolling EPS low panel)
+
+        base_url = 'https://api.wsj.net/api/kaavio/charts/big.chart?'  + urlencode(payload) #lf = volume+, lf2 = rolling EPS
+        chart_urls = []
+
+        for row in self.data:
+            chart_urls.append(base_url + f"&symb={row.get('Ticker')}")
+
+        async_connector = Connector(scrape.download_chart_image, chart_urls)
+        async_connector.run_connector()   
+                              
 
     def get_charts(self, period="d", size="l", chart_type="c", ta="1"):
         """
