@@ -47,7 +47,7 @@ def http_request_get(url, session=None, payload=None, parse=True):
 
 
 def sequential_data_scrape(
-    scrape_func: Callable, urls: List[str], delay: float = 0.5, *args, **kwargs
+    scrape_func: Callable, urls: List[str], delay: float = 0.1, *args, **kwargs
 ) -> List[Dict]:
     data = []
     delay_multiplier = 1.0
