@@ -338,7 +338,7 @@ class Screener(object):
 
         return export_to_csv(self.headers, self.data, f"{filename}.csv")
       
-    def get_bigcharts(self, freq='1', size='4', types='12', ma='3', maval = '21,50,200', time ='10', style='340',):
+    def get_bigcharts(self, freq='2', size='4', types='128', ma='2', maval = '10,40', time ='9', style='340',):
         """
         Downloads the charts of all tickers shown by the table from BigCharts.com.
         :param freq: table period eg. : '2' - weekly , '1'- daily  or '8' for hourly period
@@ -371,9 +371,7 @@ class Screener(object):
             'lf': '268435456'
         }) # lf = Volume+ with color bar & SMA50 (change to '1' for simple Volume, lf2 = rolling EPS low panel)
     
-        print(f"https://api.wsj.net/api/kaavio/charts/big.chart?{encoded_payload}&symb=XXX")
-    
-   
+ 
         sequential_data_scrape(
             scrape.download_chart_image,
             [
