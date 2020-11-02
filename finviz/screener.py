@@ -371,7 +371,7 @@ class Screener(object):
             'lf': '268435456'
         }) # lf = Volume+ with color bar & SMA50 (change to '1' for simple Volume, lf2 = rolling EPS low panel)
     
-        print(f"https://api.wsj.net/api/kaavio/charts/big.chart?{encoded_payload}&symb={row.get('Ticker')}")
+        print(f"https://api.wsj.net/api/kaavio/charts/big.chart?{encoded_payload}&symb=XXX")
     
    
         sequential_data_scrape(
