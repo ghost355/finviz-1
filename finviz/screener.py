@@ -359,7 +359,7 @@ class Screener(object):
         
         """
    
-        payload = {
+        encoded_payload = urlencode({
             'freq': freq,
             'size': size,
             'type': type,
@@ -369,16 +369,21 @@ class Screener(object):
             'style': style,
             'lf2': '67108864',
             'lf': '268435456'
-        } # lf = Volume+ with color bar & SMA50 (change to '1' for simple Volume, lf2 = rolling EPS low panel)
+        }) # lf = Volume+ with color bar & SMA50 (change to '1' for simple Volume, lf2 = rolling EPS low panel)
+    
+    
+        
 
-        base_url = 'https://api.wsj.net/api/kaavio/charts/big.chart?'  + urlencode(payload) #lf = volume+, lf2 = rolling EPS
-        chart_urls = []
-
-        for row in self.data:
-            chart_urls.append(base_url + f"&symb={row.get('Ticker')}")
-
-        async_connector = Connector(scrape.download_chart_image, chart_urls)
-        async_connector.run_connector()   
+        sequential_data_scrape(
+            scrape.download_chart_image,
+            [
+                f"https://api.wsj.net/api/kaavio/charts/big.chart?{encoded_payload}&symb={row.get('Ticker')}"
+                for row in self.data
+            ],
+            self._delay,
+        )
+        
+        
                               
 
     def get_charts(self, period="d", size="l", chart_type="c", ta="1"):
